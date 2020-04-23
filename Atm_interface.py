@@ -50,13 +50,13 @@ class Login(QtWidgets.QDialog):
                 self, 'Error', 'Bad user or password')
             self.lineEdit_password.clear()
             self.lineEdit_username.clear()
-
         
 
 class Window(QtWidgets.QWidget):
     def __init__(self,client,account):
         super().__init__()
         self.client = client
+        self.flag = False
         self.window()
         
     def window(self):
@@ -66,12 +66,13 @@ class Window(QtWidgets.QWidget):
         tabWidget = QtWidgets.QTabWidget()
 
         tabWidget.addTab(Tab_ballance(client,account), "Varlıklar")
-        
+
         tabWidget.addTab(Tab_debt(client,account), "Borçlar")
         tabWidget.addTab(Tab_account_operation(),"İşlemler")
 
         vbox.addWidget(tabWidget)
         self.setLayout(vbox)
+
 
 class Tab_ballance(QtWidgets.QWidget):
     def __init__(self,client,account):
@@ -274,17 +275,17 @@ class Tab_currency(QtWidgets.QWidget):
         pass
 
 
-
 if __name__ == '__main__':
 
     app = QtWidgets.QApplication(sys.argv)
     login = Login()
 
     if login.exec_() == QtWidgets.QDialog.Accepted:
+        
         client = login.client
         account = user.account_info(client.client_id)
-        window = Window(client,account)
-        window.show()
+        window1 = Window(client,account)
+        window1.show()        
         sys.exit(app.exec_())
 
 
